@@ -89,19 +89,24 @@
                                     <a class="nav-link" href="Default.aspx"><span class="icon home"></span>Inicio <span class="sr-only">(current)</span></a>
                                 </li>
                                 <li class="nav-item" id="menuReporte" runat="server">
-                                    <a class="nav-link" href="RestructuracionLitros.aspx"><span class="icon gas"></span>Restructuración de litros</a>
+                                    <a class="nav-link" href="RestitucionLitros.aspx"><span class="icon gas"></span>Restitución de litros</a>
                                 </li>
-                                <li class="nav-item" id="menuConfiguracion" runat="server">
-                                    <a class="nav-link" href="Configuracion.aspx"><span class="icon config"></span>Configuración</a>
-                                </li>
+                                <%--<li class="nav-item" id="menuConfiguracion" runat="server">
+                                    <a class="nav-link" href="#"><span class="icon config"></span>Configuración</a>
+                                </li>--%>
+                                 <li class="nav-item dropdown" id="menuConfiguracion" runat="server">
+                                     <a class="nav-link dropdown-toggle" href="#menu" id="submenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                         <span class="icon config"></span>Configuración</a>
+                                     <div class="dropdown-menu" aria-labelledby="submenu" id="menu">
+                                         <a class="dropdown-item" href="Destinos.aspx">Destinos</a>
+                                         <a class="dropdown-item" href="Usuarios.aspx">Usuarios</a>
+                                     </div>
+                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <asp:LinkButton runat="server" ID="CerrarSesion" Text="Cerrar Sesión" OnClick="CerrarSesion_Click" ForeColor="White"></asp:LinkButton>
+                            <asp:LinkButton runat="server" ID="CerrarSesion" Text="Cerrar sesión" OnClick="CerrarSesion_Click" ForeColor="White"></asp:LinkButton>
                         </div>
-                        <%--<div class="user-logged">
-                            <asp:Label ID="lblUsuario" runat="server"></asp:Label>
-                        </div>--%>
                     </nav>
                 </div>
             </header>

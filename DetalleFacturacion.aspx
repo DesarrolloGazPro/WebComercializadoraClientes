@@ -79,14 +79,6 @@
                             <ContentTemplate>
                                 <div style="align-content: center" class="widget-content widget-content-area br-6" runat="server" id="divLista">
                                 </div>
-                                <%--<table style="width: 100%">
-                                    <tr>
-                                        <td style="width: 50%"></td>
-                                        <td style="width: 50%; text-align: right">
-                                            <img alt="logo" src="assets/img/pemex.svg" style="width: 150px; height: 50px">
-                                        </td>
-                                    </tr>
-                                </table>--%>
                             </ContentTemplate>
                         </asp:UpdatePanel>
                     </div>
