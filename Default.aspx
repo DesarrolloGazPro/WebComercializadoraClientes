@@ -102,7 +102,7 @@
             <h3>Información de embarques programados  </h3>
         </div>
         <div class="col-md-3 text-right">
-            <asp:LinkButton runat="server" ID="exportExcel" OnClick="BtnExportarXls_Click" CssClass="btn btn-success">Excel</asp:LinkButton>
+            <asp:LinkButton runat="server" ID="exportExcel" OnClick="BtnExportarXls_Click" CssClass="btn btn-primary" Width="25%">Excel</asp:LinkButton>
         </div>
     </div>
     <div class="row">

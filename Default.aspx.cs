@@ -292,7 +292,7 @@ public partial class Default2 : System.Web.UI.Page
             Session["Centro"] = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Centro"].ToString();
             Session["Destino"] = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["Destino"].ToString();
             if (estado == "FACTURADO")
-                Response.Redirect("viewFactura.aspx");
+                Response.Redirect("DetalleFacturacion.aspx");
             else
             {
                 string javaScript = "confirmacionError('El pedido no se encuentra facturado');";
@@ -386,7 +386,7 @@ public partial class Default2 : System.Web.UI.Page
             sb.Append("<td>" + row["FechaHoraEstimada"].ToString().Trim() + "</td>");
             sb.Append("<td>" + row["FechaFactura"].ToString().Trim() + "</td>");
             sb.Append("<td>" + row["Estado"].ToString().Trim() + "</td>");
-            sb.Append("<td><a class='icon icon-pdf' href='viewfactura.aspx?" + row["Centro"].ToString().Trim()
+            sb.Append("<td><a class='icon icon-pdf' href='DetalleFacturacion.aspx?" + row["Centro"].ToString().Trim()
                 + "?" + row["Estado"].ToString().Trim()
                 + "?" + row["Folio"].ToString().Trim()
                 + "?" + row["Destino"].ToString().Trim()
