@@ -1,0 +1,76 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset='utf-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <title>GAZPRO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <header id="banner">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="flex-logo">
+                            <a class="navbar-brand" href="default.aspx"></a>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="#"><span class="icon home"></span>Inicio <span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item" id="menuReporte" runat="server">
+                                    <a class="nav-link" href="#"><span class="icon gas"></span>Restructuración de litros</a>
+                                </li>
+                                <li class="nav-item" id="menuConfiguracion" runat="server">
+                                    <a class="nav-link" href="#"><span class="icon config"></span>Configuración</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <asp:LinkButton runat="server" ID="CerrarSesion" Text="Cerrar Sesión" OnClick="CerrarSesion_Click" ForeColor="White"></asp:LinkButton>
+                        </div>
+                        <%--<div class="user-logged">
+                            <asp:Label ID="lblUsuario" runat="server"></asp:Label>
+                        </div>--%>
+                    </nav>
+                </div>
+            </header>
+            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+            <section class="content">
+                <div class="container-fluid">
+
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+
+                </div>
+            </section>
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 offset-md-4 text-center">
+                            <img class="logo-footer" src="assets/img/icon-pemex.svg" />
+                            <p>Todos los derechos reservados  |  2023</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </form>
+</body>
+</html>
