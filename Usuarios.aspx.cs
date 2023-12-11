@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -24,6 +25,7 @@ public partial class Usuarios : System.Web.UI.Page
             }
 
             cVar.cnnComercializadora = System.Configuration.ConfigurationManager.ConnectionStrings["ComercializadoraConnectionString"].ToString();
+            txtIDUsuarioModal.Text = "";
             validarAccesos();
             Cargardatos();
         }
@@ -171,9 +173,9 @@ public partial class Usuarios : System.Web.UI.Page
         if (e.CommandName == "Editar")
         {
             txtIDUsuarioModal.Text = id;
+            CargarDatos();
             string javaScript = "showCompose();";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
-            //Response.Redirect("EditarUsuario.aspx?idUsuario=" + id);
         }
         if (e.CommandName == "Delete")
         {
@@ -183,22 +185,192 @@ public partial class Usuarios : System.Web.UI.Page
             sql.eliminar("Usuarios", "id=" + id, out msg);
             if (msg == "")
             {
+                Cargardatos();
                 string javaScript = "confirmacionCorrecto('El usuario fue eliminado exitosamente');";
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
-
-                Cargardatos();
             }
         }
-
-    }
-
-    protected void btnGuardar_Click(object sender, EventArgs e)
-    {
-
     }
 
     protected void btnCerrar_Click(object sender, EventArgs e)
     {
         Response.Redirect("Usuarios.aspx");
+    }
+
+    protected void RadDestinos_ItemCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
+    {
+        string idDestino = e.Item.OwnerTableView.DataKeyValues[e.Item.ItemIndex]["idDestino"].ToString();
+
+        if (e.CommandName == "Delete")
+        {
+            cSql sql = new cSql();
+            sql.conectar(cVar.cnnComercializadora);
+            string msg = "";
+            sql.eliminar("UsuariosDestinos", "idUsuario=" + txtIDUsuarioModal.Text + " and idDestino=" + idDestino, out msg);
+            if (msg == "")
+            {
+                string javaScript = "confirmacionCorrecto('El destino fue eliminado exitosamente');";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
+
+                divItem.Visible = false;
+                divListaItems.Visible = true;
+                CargarDatos();
+            }
+        }
+    }
+
+    protected void btnAgregarDestino_Click(object sender, EventArgs e)
+    {
+        //Guardar();
+        divItem.Visible = true;
+        divListaItems.Visible = false;
+    }
+
+    protected void btnGuardar_Click(object sender, EventArgs e)
+    {
+        string msg = Guardar();
+        if (msg == "")
+        {
+            string javaScript = "confirmacionCorrecto('El usuario se guardo exitosamente');";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
+        }
+    }
+
+    public static bool esEmailValido(string strMailAddress)
+    {
+        return Regex.IsMatch(strMailAddress, @"^(?("")("".+?""@)|(([0-9a-zA-Z]((\.(?!\.))|[-!#\$%&'\*\+/=\?\^`\{\}\|~\w])*)(?<=[0-9a-zA-Z])@))" + @"(?(\[)(\[(\d{1,3}\.){3}\d{1,3}\])|(([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,6}))$");
+    }
+
+    private void insertarUsuario()
+    {
+        cVar.cnnComercializadora = System.Configuration.ConfigurationManager.ConnectionStrings["ComercializadoraConnectionString"].ToString();
+        cSql sql = new cSql();
+        sql.conectar(cVar.cnnComercializadora);
+        DataSet ds = new DataSet();
+        string msg = "";
+
+
+        int id = sql.consultaEntero("max(id)", "usuarios", "id>0", out msg);
+        id++;
+        sql.insertar("insert into usuarios (id, nombre) values('" + id + "','')", out msg);
+        if (msg == "")
+        {
+            //Session["idUsuario"] = id;
+            ds = sql.consultaDataSet("usuariosDestinos d join destinos d on d.id=u.iddestino", "d.idUsuario=" + txtIDUsuarioModal.Text, out msg);
+            RadDestinos.DataSource = ds;
+            RadDestinos.DataBind();
+        }
+
+    }
+
+    private void CargarDatos()
+    {
+        cVar.cnnComercializadora = System.Configuration.ConfigurationManager.ConnectionStrings["ComercializadoraConnectionString"].ToString();
+        cSql sql = new cSql();
+        sql.conectar(cVar.cnnComercializadora);
+        DataSet ds = new DataSet();
+        string msg = "";
+
+        ds = sql.consultaDataSet("usuarios", "id=" + txtIDUsuarioModal.Text, out msg);
+        if (ds.Tables.Count > 0)
+        {
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                txtNombre.Text = row["Nombre"].ToString().Trim();
+                txtUsuario.Text = row["Usuario"].ToString().Trim();
+                txtPassword.Text = row["Password"].ToString().Trim();
+                txtCorreo.Text = row["Correo"].ToString().Trim();
+                dropAllDestinos.SelectedIndex = int.Parse(row["allDestinos"].ToString().Trim());
+                dropEsadmin.SelectedIndex = int.Parse(row["esAdmin"].ToString().Trim());
+            }
+        }
+
+        ds = sql.consultaDataSet("usuariosDestinos u join destinos d on d.id=u.idDestino", "u.idUsuario=" + txtIDUsuarioModal.Text, out msg);
+        RadDestinos.DataSource = ds;
+        RadDestinos.DataBind();
+    }
+
+    protected void btnGuardarDestino_Click(object sender, EventArgs e)
+    {
+        cVar.cnnComercializadora = System.Configuration.ConfigurationManager.ConnectionStrings["ComercializadoraConnectionString"].ToString();
+        cSql sql = new cSql();
+        sql.conectar(cVar.cnnComercializadora);
+        DataSet ds = new DataSet();
+        string msg = "";
+
+        Guardar();
+
+        if (Guardar() != "error")
+            sql.insertar("insert usuariosDestinos (idUsuario,IdDestino)  values ('" + txtIDUsuarioModal.Text + "','" + dropDestino.SelectedValue + "')", out msg);
+
+        divItem.Visible = false;
+        divListaItems.Visible = true;
+
+        ds = sql.consultaDataSet("usuariosDestinos u join destinos d on d.id=u.iddestino", "u.idUsuario=" + txtIDUsuarioModal.Text, out msg);
+        RadDestinos.DataSource = ds;
+        RadDestinos.DataBind();
+    }
+
+    protected void btnCancelar_Click(object sender, EventArgs e)
+    {
+        divItem.Visible = false;
+        divListaItems.Visible = true;
+    }
+
+    private string Guardar()
+    {
+        cVar.cnnComercializadora = System.Configuration.ConfigurationManager.ConnectionStrings["ComercializadoraConnectionString"].ToString();
+        cSql sql = new cSql();
+        sql.conectar(cVar.cnnComercializadora);
+        DataSet ds = new DataSet();
+        string msg = "";
+        int error = 0;
+
+        if (txtNombre.Text.Trim() == "")
+        {
+            lblErrorNombre.Text = "El nombre es obligatorio";
+            error++;
+        }
+        else
+        {
+            lblErrorNombre.Text = "";
+        }
+
+        if (txtUsuario.Text.Trim() == "")
+        {
+            lblErrorUsuario.Text = "El usuario es obligatorio";
+            error++;
+        }
+        else
+        {
+            lblErrorUsuario.Text = "";
+        }
+        if (txtPassword.Text.Trim() == "")
+        {
+            lblErrorPassword.Text = "La contraseña es obligatoria";
+            error++;
+        }
+        else
+        {
+            lblErrorPassword.Text = "";
+        }
+
+        if (!esEmailValido(txtCorreo.Text))
+        {
+            lblErrorEmail.Text = "El correo es invalido";
+            error++;
+        }
+        else
+        {
+            lblErrorEmail.Text = "";
+        }
+
+        if (error > 0)
+            return "error";
+
+        sql.insertar("update usuarios set nombre='" + txtNombre.Text + "',usuario='" + txtUsuario.Text.Trim() + "',password='" + txtPassword.Text.Trim() + "',correo='" + txtCorreo.Text.Trim() + "'," +
+            "allDestinos=" + dropAllDestinos.SelectedIndex + ",esadmin=" + dropEsadmin.SelectedIndex + " where id=" + txtIDUsuarioModal.Text, out msg);
+
+        return msg;
     }
 }
