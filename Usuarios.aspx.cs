@@ -158,7 +158,9 @@ public partial class Usuarios : System.Web.UI.Page
 
     protected void btnAgregar_Click(object sender, EventArgs e)
     {
-        Response.Redirect("EditarUsuario.aspx?idUsuario=0");
+        txtIDUsuarioModal.Text ="0";
+        string javaScript = "showCompose();";
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
     }
 
     protected void RadUsuarios_ItemCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
@@ -168,8 +170,10 @@ public partial class Usuarios : System.Web.UI.Page
 
         if (e.CommandName == "Editar")
         {
-
-            Response.Redirect("EditarUsuario.aspx?idUsuario=" + id);
+            txtIDUsuarioModal.Text = id;
+            string javaScript = "showCompose();";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "script", javaScript, true);
+            //Response.Redirect("EditarUsuario.aspx?idUsuario=" + id);
         }
         if (e.CommandName == "Delete")
         {
@@ -186,5 +190,15 @@ public partial class Usuarios : System.Web.UI.Page
             }
         }
 
+    }
+
+    protected void btnGuardar_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    protected void btnCerrar_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Usuarios.aspx");
     }
 }

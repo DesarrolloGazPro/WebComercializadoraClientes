@@ -3,6 +3,12 @@
 <%@ Register Assembly="Telerik.Web.UI" Namespace="Telerik.Web.UI" TagPrefix="telerik" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <script type="text/javascript">
+        function showCompose() {
+            var overlay = document.getElementById('composeOverlay');
+            overlay.style.display = 'block';
+        }
+    </script>
     <style>
         .mb-5, .my-5 {
             margin-bottom: 1rem !important;
@@ -23,6 +29,44 @@
                 padding: 0;
                 overflow: hidden;
                 background-color: #0d1733 !important;
+            }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            width: 900px;
+            max-width: 90%;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .popup-header {
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+
+        .popup {
+            padding: 0;
+            border-radius: 8px !important;
+        }
+
+            .popup > *:not(.popup-header) {
+                margin: 15px 15px;
             }
     </style>
 </asp:Content>
@@ -84,5 +128,20 @@
             </MasterTableView>
         </telerik:RadGrid>
     <br />
+    <%-- Ventana popup --%>
+    <div id="composeOverlay" class="overlay">
+        <div id="composePopup" class="popup">
+            <div class="popup-header">
+                <h5>Detalle usuarios</h5>
+            </div>
+            <asp:TextBox runat="server" ID="txtIDUsuarioModal" ReadOnly="true"></asp:TextBox>
+            <br />
+            <center>
+                <asp:Button runat="server" ID="btnGuardar" Text="Guardar" OnClick="btnGuardar_Click" CssClass="btn btn-primary" Width="13%"/>
+                <asp:Button runat="server" ID="btnCerrar" Text="Cerrar" OnClick="btnCerrar_Click" CssClass="btn btn-secondary"/>
+            </center>
+        </div>
+    </div>
+    <%-- Ventana popup --%>
 </asp:Content>
 
