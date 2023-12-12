@@ -119,7 +119,7 @@
                                 </li>--%>
                                 <li class="nav-item dropdown" id="menuConfiguracion" runat="server">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="icon settings"></span>Configuración</a>
+                                        <span class="icon config"></span>Configuración</a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="Usuarios.aspx">Usuarios</a>
                                         <a class="dropdown-item" href="Destinos.aspx">Destinos</a>
