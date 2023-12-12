@@ -9,11 +9,17 @@
     <meta charset='utf-8' />
     <meta http-equiv='X-UA-Compatible' content='IE=edge' />
     <title>GAZPRO</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="assets/css/styles.css" />
-    <link href="Assets/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
-    <script src="Assets/SweetAlert2/sweetalert2.js"></script>
+
+    <!-- SwetAlert2 -->
+    <link href="assets/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="assets/SweetAlert2/sweetalert2.js"></script>
+    <link href="assets/SweetAlert2/dark.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script>
         function confirmacionError(mensaje) {
             Swal.fire({
@@ -67,6 +73,15 @@
             })
         }
     </script>
+    <style>
+        .dropdown-menu {
+            background-color: #0f1731 !important; 
+        }
+        
+        .dropdown-item:hover {
+            color: #000000 !important; 
+        }
+    </style>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 
@@ -92,16 +107,24 @@
                                     <a class="nav-link" href="RestitucionLitros.aspx"><span class="icon gas"></span>Restitución de litros</a>
                                 </li>
                                 <%--<li class="nav-item" id="menuConfiguracion" runat="server">
-                                    <a class="nav-link" href="#"><span class="icon config"></span>Configuración</a>
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="collapse" data-target="#submenuConfiguracion" aria-expanded="false"><span class="icon config"></span>Configuración</a>
+                                    <ul class="collapse list-unstyled" id="submenuConfiguracion" aria-labelledby="submenu">
+                                        <li>
+                                            <a href="Usuarios.aspx">Usuarios</a>
+                                        </li>
+                                        <li>
+                                            <a href="Destinos.aspx">Destinos</a>
+                                        </li>
+                                    </ul>
                                 </li>--%>
-                                 <li class="nav-item dropdown" id="menuConfiguracion" runat="server">
-                                     <a class="nav-link dropdown-toggle" href="#menu" id="submenu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                         <span class="icon config"></span>Configuración</a>
-                                     <div class="dropdown-menu" aria-labelledby="submenu" id="menu">
-                                         <a class="dropdown-item" href="Destinos.aspx">Destinos</a>
-                                         <a class="dropdown-item" href="Usuarios.aspx">Usuarios</a>
-                                     </div>
-                                 </li>
+                                <li class="nav-item dropdown" id="menuConfiguracion" runat="server">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="icon settings"></span>Configuración</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="Usuarios.aspx">Usuarios</a>
+                                        <a class="dropdown-item" href="Destinos.aspx">Destinos</a>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                         <div>
@@ -130,6 +153,7 @@
                 </div>
             </footer>
         </div>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
     </form>
 </body>
 </html>

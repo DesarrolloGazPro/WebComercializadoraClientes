@@ -9,6 +9,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- SwetAlert2 -->
+    <link href="assets/SweetAlert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="assets/SweetAlert2/sweetalert2.js"></script>
+    <link href="assets/SweetAlert2/dark.css" rel="stylesheet" />
+
+    <script>
+        function confirmacionError(mensaje) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: '<span style="font-size:1em;color:red;">' + mensaje + '</span>'
+            })
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
